@@ -67,20 +67,20 @@ You can reproduce all experiments in our paper.
 python test_offensEval.py --language arabic --model_text chatgpt --task offensive_detect --context False
 ```
 
-    Parameter: 
-    - language: the language of targeted culture. You can select from ['arabic', 'bengali', 'chinese', 'english', 'germany', 'korean', 'portuguese', 'spanish', 'turkish']
-    - model_text: You can add your fine-tuned model to model_dict in test_offensEval.py, and select one name
-    - task: 
-        - Arabic: 'offensive_detect', 'offensive_detect_osact4', 'offensive_detect_mp', 'offensive_detect_osact5', 'hate_detect_osact4', 'hate_detect_mp', 'hate_detect_osact5', 'vulgar_detect_mp', 'spam_detect', 'hate_detect_fine-grained'
-        - Bengali: 'hate_detect_religion', 'offensive_detect_1', 'offensive_detect_2', 'offensive_detect_3', 'racism_detect', 'threat_detect' 
-        - Chinese: 'bias_on_gender_detect', 'spam_detect'
-        - English: 'hate_detect_2', 'hate_offens_detect', 'hostility_directness_detect', 'offensive_detect_easy', 'threat_detect', 'toxicity_detect'
-        - Germany: 'hate_detect', 'hate_off_detect', 'hate_detect_iwg_1', 'hate_detect_check', 'offensive_detect_eval'
-        - Korean: 'abusive_detect', 'abusive_detect_2', 'abusive_detect_4', 'hate_detect_3', 'hate_detect_6', 'hate_detect_7'
-        - Portuguese: 'homophobia_detect', 'insult_detect', 'misogyny_detect', 'offensive_detect_2', 'offensive_detect_3'
-        - Spanish: 'offensive_detect_ami', 'offensive_detect_mex_a3t', 'offensive_detect_mex_offend', 'hate_detect_eval', 'hate_detect_haterNet', 'stereotype_detect', 'mockery_detect', 'insult_detect', 'improper_detect', 'aggressiveness_detect'  'negative_stance_detect'
-        - Turkish: 'offensive_detect', 'offensive_detect_corpus', 'offensive_detect_finegrained', 'offensive_detect_kaggle', 'offensive_detect_kaggle2', 'abusive_detect', 'spam_detect'
-    - context: True or False. If True, a culture-related context will be appended in prompt.
+Parameter: 
+- language: the language of targeted culture. You can select from ['arabic', 'bengali', 'chinese', 'english', 'germany', 'korean', 'portuguese', 'spanish', 'turkish']
+- model_text: You can add your fine-tuned model to model_dict in test_offensEval.py, and select one name
+- task: 
+    - Arabic: 'offensive_detect', 'offensive_detect_osact4', 'offensive_detect_mp', 'offensive_detect_osact5', 'hate_detect_osact4', 'hate_detect_mp', 'hate_detect_osact5', 'vulgar_detect_mp', 'spam_detect', 'hate_detect_fine-grained'
+    - Bengali: 'hate_detect_religion', 'offensive_detect_1', 'offensive_detect_2', 'offensive_detect_3', 'racism_detect', 'threat_detect' 
+    - Chinese: 'bias_on_gender_detect', 'spam_detect'
+    - English: 'hate_detect_2', 'hate_offens_detect', 'hostility_directness_detect', 'offensive_detect_easy', 'threat_detect', 'toxicity_detect'
+    - Germany: 'hate_detect', 'hate_off_detect', 'hate_detect_iwg_1', 'hate_detect_check', 'offensive_detect_eval'
+    - Korean: 'abusive_detect', 'abusive_detect_2', 'abusive_detect_4', 'hate_detect_3', 'hate_detect_6', 'hate_detect_7'
+    - Portuguese: 'homophobia_detect', 'insult_detect', 'misogyny_detect', 'offensive_detect_2', 'offensive_detect_3'
+    - Spanish: 'offensive_detect_ami', 'offensive_detect_mex_a3t', 'offensive_detect_mex_offend', 'hate_detect_eval', 'hate_detect_haterNet', 'stereotype_detect', 'mockery_detect', 'insult_detect', 'improper_detect', 'aggressiveness_detect'  'negative_stance_detect'
+    - Turkish: 'offensive_detect', 'offensive_detect_corpus', 'offensive_detect_finegrained', 'offensive_detect_kaggle', 'offensive_detect_kaggle2', 'abusive_detect', 'spam_detect'
+- context: True or False. If True, a culture-related context will be appended in prompt.
 - For CValues(Chinese Dataset)
 ```bash
 python test_CValues.py --model_text chatgpt --context False
