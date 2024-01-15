@@ -14,9 +14,10 @@ pip install -q -U google-generativeai
 ```bash
 python main.py --n 5 --m 10
 ```
-    Parameter: 
-    - n: number of new generated semantic equvalient sentences perserved in the first step in our alogorithm for one seed sample
-    - m: number of final generated samples perserved in our alogorithm for one seed sample
+
+Parameter: 
+- n: number of new generated semantic equvalient sentences perserved in the first step in our alogorithm for one seed sample
+- m: number of final generated samples perserved in our alogorithm for one seed sample
 
 ## Dataset for Fine-tuning and Experiments
 
@@ -65,6 +66,7 @@ You can reproduce all experiments in our paper.
 ```bash
 python test_offensEval.py --language arabic --model_text chatgpt --task offensive_detect --context False
 ```
+
     Parameter: 
     - language: the language of targeted culture. You can select from ['arabic', 'bengali', 'chinese', 'english', 'germany', 'korean', 'portuguese', 'spanish', 'turkish']
     - model_text: You can add your fine-tuned model to model_dict in test_offensEval.py, and select one name
