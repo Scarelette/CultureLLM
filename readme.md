@@ -14,47 +14,74 @@ pip install -q -U google-generativeai
 ```bash
 python main.py --n 5 --m 10
 ```
-Parameter: 
-- n: number of new generated semantic equvalient sentences perserved in the first step in our alogorithm for one seed sample
-- m: number of final generated samples perserved in our alogorithm for one seed sample
+    Parameter: 
+    - n: number of new generated semantic equvalient sentences perserved in the first step in our alogorithm for one seed sample
+    - m: number of final generated samples perserved in our alogorithm for one seed sample
 
 ## Dataset for Fine-tuning and Experiments
 
-/data contains all datasets for fine-tuning and experiments.
-/data/WVQ.jsonl contains seed data from World Values Survey.
-/data/new_WVQ_500.jsonl contains 500 new generated samples via our data augmentation approach. Those data samples are also be used in our main experiments.
-/data/new_WVQ_100.jsonl contains 100 new generated samples via our data augmentation approach.
-/data/new_WVQ_1000.jsonl contains 1000 new generated samples via our data augmentation approach.
-/data/new_WVQ_sentence_only.jsonl contains 500 new generated samples via the first steps in our data augmentation approach.
+- /data contains all datasets for fine-tuning and experiments.
+- /data/WVQ.jsonl contains seed data from World Values Survey.
+- /data/new_WVQ_500.jsonl contains 500 new generated samples via our data augmentation approach. Those data samples are also be used in our main experiments.
+- /data/new_WVQ_100.jsonl contains 100 new generated samples via our data augmentation approach.
+- /data/new_WVQ_1000.jsonl contains 1000 new generated samples via our data augmentation approach.
+- /data/new_WVQ_sentence_only.jsonl contains 500 new generated samples via the first steps in our data augmentation approach.
 
-Besides, there are nine directories in /data, containing datasets both for fine-tuning and experiments for specific culture. /Finetune contains different versions of training datasets, which are distinguished by the last characters in file names. "50", "150", "no suffix", and "1000" represents fine-tuning via 50, 150, 500 and 1000 new generated samples, respectively. "L" respresents fine-tuning via 500 new generated samples in specific language. "llama" represents fine-tuning file for Llama. "sentence_only" represents fine-tuning via 500 new generated samples by the first steps in our data augmentation approach.
+Besides, there are nine directories in /data, containing datasets both for fine-tuning and experiments for specific culture. /Finetune contains different versions of training datasets, which are distinguished by the last characters in file names. 
+- "50", "150", "no suffix", and "1000" represents fine-tuning via 50, 150, 500 and 1000 new generated samples, respectively. 
+- "L" respresents fine-tuning via 500 new generated samples in specific language. 
+- "llama" represents fine-tuning data for Llama. 
+- "sentence_only" represents fine-tuning via 500 new generated samples by the first steps in our data augmentation approach.
 
 ## Fine-tuning your own CultureLLM
 
+data_process.py is to process data for fine-tuning. 
+
+### Fine-tune the same CultureLLMs as mentioned in paper
+
+You can first select the dataset for fine-tuning accrodding to above instructions. Then run finetune() function in data_process.py.
+
+### Fine-tune other CultureLLMs
+
+- Step 1: download WVS file from https://www.worldvaluessurvey.org/WVSContents.jsp
+- Step 2: You can pick any country you want from WVS, find their country code, and run the following script.
+```bash
+python data_process.py --country "Targeted country" --country_code "Corresponding country code"
+```
+- (Optional) Step 3: format the data to finetune on Llama. Run generateData4Llama() function.
+- (Optional) Step 4: Translate the data into other language. Run processLanguage() function.
+- Step 5: Fine-tuning.
+
+## Fine-tune CultureLLM-Llama-70b-chat
+
+```bash
+python llama_finetune.py --base_model "path_of_llama_70b" --new_model "path_of_new_model" --data_files "fine-tuning data path"
+```
 
 ## Experiments
 
-Outline the experiments conducted during the project. Include details about the models trained, hyperparameters, and any specific configurations. This section can also include the results of the experiments.
-
-## CultureLLM-Llama-70b-chat
-
-Provide specific details about the CultureLLM Llama 70b chat model. Explain its purpose in your project, how it is utilized, and any important considerations or modifications made.
-
-## Contributing
-
-If you want others to contribute to your project, provide guidelines on how they can do so. Include information on the development environment, coding standards, and the process for submitting pull requests.
-
-## License
-
-Specify the license under which your project is distributed. This is crucial for others who want to use or contribute to your codebase.
-
-## Acknowledgments
-
-Give credit to any external libraries, frameworks, or individuals whose work contributed to your project.
-
-## Contact
-
-Provide contact information or links to relevant channels where users can reach out for support, questions, or collaboration.
+You can reproduce all experiments in our paper.
+- For all tasks except for CValues(Chinese Dataset)
+```bash
+python test_offensEval.py --language arabic --model_text chatgpt --task offensive_detect --context False
 ```
-
-Remember to replace the placeholder information with the actual details for your project. The README serves as a guide for users and contributors, so make sure it's clear and informative.
+    Parameter: 
+    - language: the language of targeted culture. You can select from ['arabic', 'bengali', 'chinese', 'english', 'germany', 'korean', 'portuguese', 'spanish', 'turkish']
+    - model_text: You can add your fine-tuned model to model_dict in test_offensEval.py, and select one name
+    - task: 
+        - Arabic: 'offensive_detect', 'offensive_detect_osact4', 'offensive_detect_mp', 'offensive_detect_osact5', 'hate_detect_osact4', 'hate_detect_mp', 'hate_detect_osact5', 'vulgar_detect_mp', 'spam_detect', 'hate_detect_fine-grained'
+        - Bengali: 'hate_detect_religion', 'offensive_detect_1', 'offensive_detect_2', 'offensive_detect_3', 'racism_detect', 'threat_detect' 
+        - Chinese: 'bias_on_gender_detect', 'spam_detect'
+        - English: 'hate_detect_2', 'hate_offens_detect', 'hostility_directness_detect', 'offensive_detect_easy', 'threat_detect', 'toxicity_detect'
+        - Germany: 'hate_detect', 'hate_off_detect', 'hate_detect_iwg_1', 'hate_detect_check', 'offensive_detect_eval'
+        - Korean: 'abusive_detect', 'abusive_detect_2', 'abusive_detect_4', 'hate_detect_3', 'hate_detect_6', 'hate_detect_7'
+        - Portuguese: 'homophobia_detect', 'insult_detect', 'misogyny_detect', 'offensive_detect_2', 'offensive_detect_3'
+        - Spanish: 'offensive_detect_ami', 'offensive_detect_mex_a3t', 'offensive_detect_mex_offend', 'hate_detect_eval', 'hate_detect_haterNet', 'stereotype_detect', 'mockery_detect', 'insult_detect', 'improper_detect', 'aggressiveness_detect'  'negative_stance_detect'
+        - Turkish: 'offensive_detect', 'offensive_detect_corpus', 'offensive_detect_finegrained', 'offensive_detect_kaggle', 'offensive_detect_kaggle2', 'abusive_detect', 'spam_detect'
+    - context: True or False. If True, a culture-related context will be appended in prompt.
+- For CValues(Chinese Dataset)
+```bash
+python test_CValues.py --model_text chatgpt --context False
+```
+    - model_text: You can add your fine-tuned model to model_dict in test_CValues.py, and select one name.
+    - context: True or False. If True, a culture-related context will be appended in prompt.
