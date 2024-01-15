@@ -20,8 +20,7 @@ Parameter:
 
 ## Dataset for Fine-tuning and Experiments
 
-/data contains all datasets for fine-tuning and experiments.
-/data/WVQ.jsonl contains seed data from World Values Survey.
+/data contains all datasets for fine-tuning and experiments.  /data/WVQ.jsonl contains seed data from World Values Survey.
 /data/new_WVQ_500.jsonl contains 500 new generated samples via our data augmentation approach. Those data samples are also be used in our main experiments.
 /data/new_WVQ_100.jsonl contains 100 new generated samples via our data augmentation approach.
 /data/new_WVQ_1000.jsonl contains 1000 new generated samples via our data augmentation approach.
