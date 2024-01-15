@@ -1,0 +1,7 @@
+link: https://github.com/joeykay9/offenseval
+
+paper: 
+SemEval-2019 (OffensEval): Identifying and Categorizing Offensive Language in Social Media
+https://arxiv.org/pdf/2104.04871.pdf
+
+size: olid-training-v1.tsv contains 13,240 annotated tweets.

@@ -1,0 +1,4 @@
+{"Model": "Jordan_Iraq_test2_2", "f1_score": 0.800078267231552, "Context": false}
+{"Model": "Jordan_Iraq", "f1_score": 0.8188100191811463, "Context": false}
+{"Model": "chatgpt", "f1_score": 0.8250014583211807, "Context": false}
+{"Model": "gpt-4", "f1_score": 0.8825112682374554, "Context": false}

@@ -1,0 +1,25 @@
+HatEval data request
+Your request for the HatEval dataset has been accepted.
+
+Download link: https://datacloud.di.unito.it/index.php/s/eMZdFYq6yRP3zeL
+
+Password: 2019hateval
+
+Overview paper: https://www.aclweb.org/anthology/S19-2007/
+
+The HatEval dataser is released under the Creative Commons CC-BY-NC-4.0 license: https://creativecommons.org/licenses/by-nc/4.0/
+
+Feel free to write to Valerio Basile <valerio.basile@unito.it> for any question.
+
+Best regards,
+the organizers of HatEval 2019
+
+File format
+
+The data have been encoded with the same format, independently of the task and language. Such format consists of a tab-separated file with one line per tweet containing the following fields:
+
+    a numeric ID that uniquely identifies the tweet within the dataset (id column)
+    the text of the tweet (text column)
+    a binary value {1|0} indicating if hate speech is occurring against one of the given targets, women or immigrants (HS column)
+    if HS occurs (i.e. the value for the feature at point 2 is 1), a binary value indicating if the target is a generic group of people (0) or a specific individual (1) (TR column)
+    if HS occurs (i.e. the value for the feature at point 2 is 1), a binary value indicating if the tweeter is aggressive (1) or not (0) (AG column)

@@ -1,0 +1,39 @@
+========================
+
+Offensive Greek Tweet Dataset (OGTD)
+v 1.0: August 1 2019
+https://zpitenis.com/resources/ogtd
+
+========================
+
+1) DESCRIPTION
+
+This is the README file for OGTD, created for my thesis titled "Detecting Offensive Posts in Greek Social Media".
+
+OGTD contains 4,779 annotated tweets in Greek.
+
+The files included are:
+- ogtd-v1.csv: contains the complete collection of tweets
+
+The dataset was annotated using a team of three volunteer annotators. The gold labels were assigned taking the agreement of the annotators into consideration. 
+
+Twitter user mentions were substituted by @USER and URLs have been erased.
+
+OGTD is annotated using binary labels. Each instance contains one label.
+
+2) FORMAT
+
+The column names of the dataset are the following:
+
+ID	Tweet	Label
+
+3) LABELS AND ANNOTATION
+
+The labels for offensive language identification in Greek are:
+
+- Offensive - Profane or obscene posts with an offensive connotation or if it can be considered offensive based on the context, in any way for the target/targets of the tweet and not only the annotators themselves.
+- Not Offensive - Clean posts that do fall into the above description. 
+
+
+
+
