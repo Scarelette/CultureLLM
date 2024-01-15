@@ -85,5 +85,7 @@ Parameter:
 ```bash
 python test_CValues.py --model_text chatgpt --context False
 ```
-    - model_text: You can add your fine-tuned model to model_dict in test_CValues.py, and select one name.
-    - context: True or False. If True, a culture-related context will be appended in prompt.
+
+Parameter: 
+- model_text: You can add your fine-tuned model to model_dict in test_CValues.py, and select one name.
+- context: True or False. If True, a culture-related context will be appended in prompt.
