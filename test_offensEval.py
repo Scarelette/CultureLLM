@@ -13,97 +13,97 @@ with open("data/culture_context.jsonl", "r+", encoding="utf8") as f:
 
 def getModel(language):
     if language.lower() == 'arabic':
-        model_dict = {'Jordan_Iraq': 'ft:gpt-3.5-turbo-0613:robustlearn::8SfKzaTd',  # best
+        model_dict = {'Jordan_Iraq': 'xxx',  # best
                     'chatgpt': 'gpt-3.5-turbo',
-                    'Jordan_Iraq_L': 'ft:gpt-3.5-turbo-0613:robustlearn::8TLInmsT',
-                    'llama_Arabic': '/mnt/mydata/llama2_models/llama-2-70b-chat-Arabic',
-                    'llama': '/mnt/mydata/LLMs/llama2-70b-chat',
-                    'Jordan_Iraq_50': 'ft:gpt-3.5-turbo-0613:robustlearn::8b0iuWdb',
-                    'Jordan_Iraq_100': 'ft:gpt-3.5-turbo-0613:robustlearn::8cSKnrL5',
-                    'Jordan_Iraq_1000': 'ft:gpt-3.5-turbo-0613:robustlearn::8cVoR8rg',
-                    'Jordan_Iraq_s': 'ft:gpt-3.5-turbo-0613:robustlearn::8dYzqXgQ'}
+                    'Jordan_Iraq_L': 'xxx',
+                    'llama_Arabic': 'xxx',
+                    'llama': 'xxx',
+                    'Jordan_Iraq_50': 'xxx',
+                    'Jordan_Iraq_100': 'xxx',
+                    'Jordan_Iraq_1000': 'xxx',
+                    'Jordan_Iraq_s': 'xxx'}
     elif language.lower() == 'turkish':
-        model_dict = {'turkish': 'ft:gpt-3.5-turbo-0613:robustlearn::8VDtPBJu',
-                      'turkish_L': 'ft:gpt-3.5-turbo-0613:robustlearn::8YuPHccu',
+        model_dict = {'turkish': 'xxx',
+                      'turkish_L': 'xxx',
                       'chatgpt': 'gpt-3.5-turbo',
-                    'llama_Turkey': '/mnt/mydata/llama2_models/llama-2-70b-chat-Turkey',
-                    'llama': '/mnt/mydata/LLMs/llama2-70b-chat',
-                    'turkish_50': 'ft:gpt-3.5-turbo-0613:robustlearn::8b2DfKS8',
-                    'turkish_100': 'ft:gpt-3.5-turbo-0613:robustlearn::8cUXYsjO',
-                    'turkish_1000': 'ft:gpt-3.5-turbo-0613:robustlearn::8cmVhqsU',
-                    'turkish_s': 'ft:gpt-3.5-turbo-0613:robustlearn::8dvTuHdO'}
+                    'llama_Turkey': 'xxx',
+                    'llama': 'xxx',
+                    'turkish_50': 'xxx',
+                    'turkish_100': 'xxx',
+                    'turkish_1000': 'xxx',
+                    'turkish_s': 'xxx'}
     elif language.lower() == 'greek':
-        model_dict = {'greek': 'ft:gpt-3.5-turbo-0613:robustlearn::8VDyaB6S',
+        model_dict = {'greek': 'xxx',
                       'chatgpt': 'gpt-3.5-turbo'}
     elif language.lower() == 'germany':
-        model_dict = {'germany': 'ft:gpt-3.5-turbo-0613:robustlearn::8VEXcCoE',
-                      'germany_L': 'ft:gpt-3.5-turbo-0613:robustlearn::8Ys7oHjw',
+        model_dict = {'germany': 'xxx',
+                      'germany_L': 'xxx',
                       'chatgpt': 'gpt-3.5-turbo',
-                    'llama_Germany': '/mnt/mydata/llama2_models/llama-2-70b-chat-Germany',
-                    'llama': '/mnt/mydata/LLMs/llama2-70b-chat',
-                    'germany_50': 'ft:gpt-3.5-turbo-0613:robustlearn::8b1dLe0g',
-                    'germany_100': 'ft:gpt-3.5-turbo-0613:robustlearn::8cT4q3Gd',
-                    'germany_1000': 'ft:gpt-3.5-turbo-0613:robustlearn::8cl81tvp',
-                    'germany_s': 'ft:gpt-3.5-turbo-0613:robustlearn::8dblJDLx'}
+                    'llama_Germany': 'xxx',
+                    'llama': 'xxx',
+                    'germany_50': 'xxx',
+                    'germany_100': 'xxx',
+                    'germany_1000': 'xxx',
+                    'germany_s': 'xxx'}
     elif language.lower() == 'spanish':
-        model_dict = {'spanish': 'ft:gpt-3.5-turbo-0613:robustlearn::8VEzBwgo',
-                      'spanish_L': 'ft:gpt-3.5-turbo-0613:robustlearn::8YtRQq2E',
+        model_dict = {'spanish': 'xxx',
+                      'spanish_L': 'xxx',
                       'chatgpt': 'gpt-3.5-turbo',
-                    'llama_Spanish': '/mnt/mydata/llama2_models/llama-2-70b-chat-Spanish',
-                    'llama': '/mnt/mydata/LLMs/llama2-70b-chat',
-                    'spanish_50': 'ft:gpt-3.5-turbo-0613:robustlearn::8b2AuDe3',
-                    'spanish_100': 'ft:gpt-3.5-turbo-0613:robustlearn::8cUdTTZI',
-                    'spanish_1000': 'ft:gpt-3.5-turbo-0613:robustlearn::8cmZqvzJ',
-                    'spanish_s': 'ft:gpt-3.5-turbo-0613:robustlearn::8dvIYRoK'}
+                    'llama_Spanish': 'xxx',
+                    'llama': 'xxx',
+                    'spanish_50': 'xxx',
+                    'spanish_100': 'xxx',
+                    'spanish_1000': 'xxx',
+                    'spanish_s': 'xxx'}
     elif language.lower() == 'bengali':
-        model_dict = {'bengali': 'ft:gpt-3.5-turbo-0613:robustlearn::8WznM0b8',
-                      'bengali_L': 'ft:gpt-3.5-turbo-0613:robustlearn::8Ys9Tdru',
+        model_dict = {'bengali': 'xxx',
+                      'bengali_L': 'xxx',
                       'chatgpt': 'gpt-3.5-turbo',
-                    'llama_Bengali': '/mnt/mydata/llama2_models/llama-2-70b-chat-Bengali',
-                    'llama': '/mnt/mydata/LLMs/llama2-70b-chat',
-                    'bengali_50': 'ft:gpt-3.5-turbo-0613:robustlearn::8b0mEGXF',
-                    'bengali_100': 'ft:gpt-3.5-turbo-0613:robustlearn::8cSKzq15',
-                    'bengali_1000': 'ft:gpt-3.5-turbo-0613:robustlearn::8cVrLmRX',
-                    'bengali_s': 'ft:gpt-3.5-turbo-0613:robustlearn::8dacheJW'}
+                    'llama_Bengali': 'xxx',
+                    'llama': 'xxx',
+                    'bengali_50': 'xxx',
+                    'bengali_100': 'xxx',
+                    'bengali_1000': 'xxx',
+                    'bengali_s': 'xxx'}
     elif language.lower() == 'chinese':
-        model_dict = {'china': 'ft:gpt-3.5-turbo-0613:robustlearn::8XPhFWIS',
-                      'china_L': 'ft:gpt-3.5-turbo-0613:robustlearn::8YsGEuBl',
+        model_dict = {'china': 'xxx',
+                      'china_L': 'xxx',
                       'chatgpt': 'gpt-3.5-turbo',
-                    'llama_China': '/mnt/mydata/llama2_models/llama-2-70b-chat-China',
-                    'llama': '/mnt/mydata/LLMs/llama2-70b-chat',
-                    'china_50': 'ft:gpt-3.5-turbo-0613:robustlearn::8b0lwKGB',
-                    'china_100': 'ft:gpt-3.5-turbo-0613:robustlearn::8cSTvNzy',
-                    'china_1000': 'ft:gpt-3.5-turbo-0613:robustlearn::8cVlQwyJ',
-                    'china_s': 'ft:gpt-3.5-turbo-0613:robustlearn::8dadsBET'}
+                    'llama_China': 'xxx',
+                    'llama': 'xxx',
+                    'china_50': 'xxx',
+                    'china_100': 'xxx',
+                    'china_1000': 'xxx',
+                    'china_s': 'xxx'}
     elif language.lower() == 'english':
-        model_dict = {'english': 'ft:gpt-3.5-turbo-0613:robustlearn::8XPXkymL',
+        model_dict = {'english': 'xxx',
                       'chatgpt': 'gpt-3.5-turbo',
-                    'llama_English': '/mnt/mydata/llama2_models/llama-2-70b-chat-English',
-                    'llama': '/mnt/mydata/LLMs/llama2-70b-chat',
-                    'english_50': 'ft:gpt-3.5-turbo-0613:robustlearn::8b1SKMFa',
-                    'english_100': 'ft:gpt-3.5-turbo-0613:robustlearn::8cTBuRQb',
-                    'english_1000': 'ft:gpt-3.5-turbo-0613:robustlearn::8clJvE9L',
-                    'english_s': 'ft:gpt-3.5-turbo-0613:robustlearn::8daO9nMP'}
+                    'llama_English': 'xxx',
+                    'llama': 'xxx',
+                    'english_50': 'xxx',
+                    'english_100': 'xxx',
+                    'english_1000': 'xxx',
+                    'english_s': 'xxx'}
     elif language.lower() == 'korean':
-        model_dict = {'korean': 'ft:gpt-3.5-turbo-0613:robustlearn::8Y5JB1BY',
-                      'korean_L': 'ft:gpt-3.5-turbo-0613:robustlearn::8YtJYClY',
+        model_dict = {'korean': 'xxx',
+                      'korean_L': 'xxx',
                       'chatgpt': 'gpt-3.5-turbo',
-                    'llama_Korean': '/mnt/mydata/llama2_models/llama-2-70b-chat-Korean',
-                    'llama': '/mnt/mydata/LLMs/llama2-70b-chat',
-                    'korean_50': 'ft:gpt-3.5-turbo-0613:robustlearn::8b1cYRE6',
-                    'korean_100': 'ft:gpt-3.5-turbo-0613:robustlearn::8cTF2oCX',
-                    'korean_1000': 'ft:gpt-3.5-turbo-0613:robustlearn::8clM9Kt2',
-                    'korean_s': 'ft:gpt-3.5-turbo-0613:robustlearn::8dbxchuU'}
+                    'llama_Korean': 'xxx',
+                    'llama': 'xxx',
+                    'korean_50': 'xxx',
+                    'korean_100': 'xxx',
+                    'korean_1000': 'xxx',
+                    'korean_s': 'xxx'}
     elif language.lower() == 'portuguese':
-        model_dict = {'portuguese': 'ft:gpt-3.5-turbo-0613:robustlearn::8Y5DS339',
-                      'portuguese_L': 'ft:gpt-3.5-turbo-0613:robustlearn::8YtPDq9L',
+        model_dict = {'portuguese': 'xxx',
+                      'portuguese_L': 'xxx',
                       'chatgpt': 'gpt-3.5-turbo',
-                    'llama_Portuguese': '/mnt/mydata/llama2_models/llama-2-70b-chat-Portuguese',
-                    'llama': '/mnt/mydata/LLMs/llama2-70b-chat',
-                    'portuguese_50': 'ft:gpt-3.5-turbo-0613:robustlearn::8b2BPmuH',
-                    'portuguese_100': 'ft:gpt-3.5-turbo-0613:robustlearn::8cUWGuFa',
-                    'portuguese_1000': 'ft:gpt-3.5-turbo-0613:robustlearn::8cmX9gau',
-                    'portuguese_s': 'ft:gpt-3.5-turbo-0613:robustlearn::8dc6P4qR'}
+                    'llama_Portuguese': 'xxx',
+                    'llama': 'xxx',
+                    'portuguese_50': 'xxx',
+                    'portuguese_100': 'xxx',
+                    'portuguese_1000': 'xxx',
+                    'portuguese_s': 'xxx'}
 
     return model_dict
 
