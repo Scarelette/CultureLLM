@@ -7,6 +7,7 @@ Large language models (LLMs) are reported to be partial to certain cultures and 
 ```bash
 pip install jsonlines fire scikit-learn torch==2.0.0 transformers bitsandbytes accelerate
 pip install openai
+pip instal nltk
 pip install -q -U google-generativeai
 ```
 ## Data Augmentation
