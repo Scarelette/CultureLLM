@@ -9,7 +9,6 @@ pip install jsonlines fire scikit-learn torch==2.0.0 transformers bitsandbytes a
 pip install openai
 pip instal nltk
 pip install -q -U google-generativeai
-pip install nltk
 ```
 ## Data Augmentation
 
