@@ -9,6 +9,8 @@ import nltk
 import codecs
 import csv, jsonlines
 import re
+import time
+from openai import OpenAI
 
 os.environ["TOKENIZERS_PARALLELISM"] = "false"
 
@@ -18,7 +20,6 @@ nltk.download('maxent_ne_chunker')
 nltk.download('words')
 
 def getResponse(prompt, model_text):
-    from openai import OpenAI
     msg = [{"role": "user", "content": prompt}]
     # print('Msg: ', msg)
     client = OpenAI(api_key="xxx")
