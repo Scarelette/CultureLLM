@@ -1,5 +1,5 @@
 import fire
-import os
+import os, time
 import random
 import torch
 # from llm_response import getResponse
@@ -16,6 +16,10 @@ nltk.download('punkt')
 nltk.download('averaged_perceptron_tagger')
 nltk.download('maxent_ne_chunker')
 nltk.download('words')
+
+model_name = "bert-base-uncased"
+tokenizer = AutoTokenizer.from_pretrained(model_name)
+model = AutoModel.from_pretrained(model_name)
 
 def getResponse(prompt, model_text):
     from openai import OpenAI
@@ -83,9 +87,6 @@ def postProcess(s, model):
 
 def calculate_similarity(sentence1, sentence2):
     def get_sentence_embedding(sentence):
-        model_name = "bert-base-uncased"
-        tokenizer = AutoTokenizer.from_pretrained(model_name)
-        model = AutoModel.from_pretrained(model_name)
         inputs = tokenizer(sentence, return_tensors="pt", padding=True, truncation=True)
         with torch.no_grad():
             outputs = model(**inputs)
