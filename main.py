@@ -9,6 +9,8 @@ import nltk
 import codecs
 import csv, jsonlines
 import re
+import time
+from openai import OpenAI
 
 os.environ["TOKENIZERS_PARALLELISM"] = "false"
 
@@ -22,7 +24,6 @@ tokenizer = AutoTokenizer.from_pretrained(model_name)
 model = AutoModel.from_pretrained(model_name)
 
 def getResponse(prompt, model_text):
-    from openai import OpenAI
     msg = [{"role": "user", "content": prompt}]
     # print('Msg: ', msg)
     client = OpenAI(api_key="xxx")
