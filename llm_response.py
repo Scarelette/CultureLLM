@@ -148,7 +148,7 @@ def getResponse(prompt, model_text, country, context, llama_model=None, llama_to
         else:
             msg = [{"role": "user", "content": prompt}]
         # print('Msg: ', msg)
-        client = OpenAI(api_key="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")
+        client = OpenAI(api_key="xxx")
 
         # print('MSG: ', msg)
 

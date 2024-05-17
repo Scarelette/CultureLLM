@@ -160,7 +160,7 @@ def getSpecificVerison():
 def finetune():
     from openai import OpenAI
 
-    client = OpenAI(api_key="")
+    client = OpenAI(api_key="xxx")
 
     client.files.create(
       file=open("data/Arabic/Finetune/WVQ_Arabic_test2.jsonl", "rb"),
