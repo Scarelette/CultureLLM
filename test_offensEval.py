@@ -503,8 +503,6 @@ def run(language, model_text, task, context, close=False):
     
     print('F1 score: ', final_f1_score)
 
-    # Jordan ft:gpt-3.5-turbo-0613:robustlearn::8SRPGTWA
-        # Iraq ft:gpt-3.5-turbo-0613:robustlearn::8SdxvH0D
     language = language.lower()
     dir_path = f'results/{language}'
     if os.path.exists(dir_path) == False:
