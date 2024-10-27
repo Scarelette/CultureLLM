@@ -2,7 +2,9 @@
 
 ## Introduction
 
+<center class ='img'>
 <img src="fig-overview.jpg" width = 60%>
+</center>
 
 Large language models (LLMs) are reported to be partial to certain cultures due to the dominance of training data from English corpora. Since multilingual cultural data are often expensive to collect, existing efforts handle this by prompt engineering or culture-specific pre-training. However, they might overlook the knowledge deficiency of low-resource cultures and require extensive computing resources. In this paper, we propose CultureLLM, a cost-effective solution to incorporate cultural differences into LLMs. CultureLLM adopts World Value Survey (WVS) as seed data and generates semantically equivalent training data via the proposed semantic data augmentation. Using only 50 seed samples from WVS with augmented data, we fine-tune culture-specific LLMs and a unified model (CultureLLM-One) for 9 cultures covering rich and low-resource languages. Extensive experiments in $60$ culture-related datasets demonstrate that \method significantly outperforms various counterparts such as GPT-3.5 (by 8.1%) and Gemini Pro (by 9.5%) with performance comparable to GPT-4 or even better. Our human study shows that the generated samples are semantically equivalent to the original samples, providing an effective solution for LLMs augmentation.
 
@@ -15,7 +17,7 @@ Large language models (LLMs) are reported to be partial to certain cultures due 
   - [3. Fine-tuning your own CultureLLM](#3-fine-tuning-your-own-culturellm)
     - [3.1. Fine-tune the same CultureLLMs as mentioned in paper](#31-fine-tune-the-same-culturellms-as-mentioned-in-paper)
     - [3.2. Fine-tune other CultureLLMs](#32-fine-tune-other-culturellms)
-    - [3.3. Fine-tune CultureLLM-Llama-70b-chat](#32-fine-tune-culturellm-llama-70b-chat)
+    - [3.3. Fine-tune CultureLLM-Llama-70b-chat](#33-fine-tune-culturellm-llama-70b-chat)
   - [4. Experiments in our paper](#4-experiments-in-our-paper)
 
 ## Requirements
