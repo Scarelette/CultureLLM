@@ -163,12 +163,12 @@ def finetune():
     client = OpenAI(api_key="xxx")
 
     client.files.create(
-      file=open("data/Arabic/Finetune/WVQ_Arabic_test2.jsonl", "rb"),
+      file=open("", "rb"),
       purpose="fine-tune"
     )
 
     client.fine_tuning.jobs.create(
-    training_file="file-7WiYbAowenC4MesXiWtJn9te", 
+    training_file="", 
     model="gpt-3.5-turbo"
     )
 
