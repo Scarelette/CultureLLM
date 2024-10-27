@@ -39,7 +39,7 @@ def getResponse(prompt, model_text, country, context, llama_model=None, llama_to
 
             url = 'https://gcrllm2-70b-chat.westus3.inference.ml.azure.com/score'
             # Replace this with the primary/secondary key or AMLToken for the endpoint
-            api_key = 'YTr1pGhu9vKuVxdi5AwhzZJwmkrByvlc'
+            api_key = 'xxx'
             if not api_key:
                 raise Exception("A key should be provided to invoke the endpoint")
 
@@ -80,11 +80,7 @@ def getResponse(prompt, model_text, country, context, llama_model=None, llama_to
         import urllib.request
         import json
         import ssl
-        key_pool = ['AIzaSyAwihsMaPr-Wiug6fdy-rkmMIQzktjgMMI', 
-                    'AIzaSyB7zS11-QBVQTP-pSqx78oqDYZ75lfJYM0', 
-                    'AIzaSyDUpVOpEevc1DN-iLEU1zy4CIbNSqB3bwI', 
-                    'AIzaSyBAUSJeOflaO20WbuMowgkKuUT7JD3l2xI', 
-                    'AIzaSyDwLHzNyEItrOh3jP6IQk4AHPlAp2aNWzQ']
+        key_pool = ['xxx']
         
         key = random.choice(key_pool)
         genai.configure(api_key=key)
