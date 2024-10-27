@@ -1,10 +1,14 @@
-# CultureLLM: Fine-tuning Culture-aware Large Language Models with Semantic Data Augmentation
+# CultureLLM: Fine-tuning Culture-aware Large Language Models with Semantic Data Augmentation (NeurIPS 2024)
 
-<img src="fig-overview.jpg" width = "100" height = "100" div align=center />
+<div  align="center"> 
+<img src="fig-overview.jpg" width = 60% />
+</div>
 
 ## Introduction
 
 Large language models (LLMs) are reported to be partial to certain cultures due to the dominance of training data from English corpora. Since multilingual cultural data are often expensive to collect, existing efforts handle this by prompt engineering or culture-specific pre-training. However, they might overlook the knowledge deficiency of low-resource cultures and require extensive computing resources. In this paper, we propose CultureLLM, a cost-effective solution to incorporate cultural differences into LLMs. CultureLLM adopts World Value Survey (WVS) as seed data and generates semantically equivalent training data via the proposed semantic data augmentation. Using only 50 seed samples from WVS with augmented data, we fine-tune culture-specific LLMs and a unified model (CultureLLM-One) for 9 cultures covering rich and low-resource languages. Extensive experiments in $60$ culture-related datasets demonstrate that \method significantly outperforms various counterparts such as GPT-3.5 (by 8.1%) and Gemini Pro (by 9.5%) with performance comparable to GPT-4 or even better. Our human study shows that the generated samples are semantically equivalent to the original samples, providing an effective solution for LLMs augmentation.
+
+Paper link: https://arxiv.org/pdf/2402.10946
 
 ## Table of Contents
 
@@ -108,3 +112,15 @@ python test_CValues.py --model_text chatgpt --context False
 Parameter: 
 - model_text: You can add your fine-tuned model to model_dict in test_CValues.py, and select one name.
 - context: True or False. If True, a culture-related context will be appended in prompt.
+
+## Cite
+
+```bash
+@article{li2024culturellm,
+  title={Culturellm: Incorporating cultural differences into large language models},
+  author={Li, Cheng and Chen, Mengzhou and Wang, Jindong and Sitaram, Sunayana and Xie, Xing},
+  journal={arXiv preprint arXiv:2402.10946},
+  year={2024}
+}
+```
+
