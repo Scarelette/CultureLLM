@@ -1,8 +1,6 @@
 # CultureLLM: Fine-tuning Culture-aware Large Language Models with Semantic Data Augmentation
 
-<center class ='img'>
-<img src="fig-overview.jpg" width = "60%">
-</center>
+<img src="fig-overview.jpg" width = "60%" div align=center>
 
 ## Introduction
 
