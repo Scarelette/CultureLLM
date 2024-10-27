@@ -1,8 +1,24 @@
 # CultureLLM: Fine-tuning Culture-aware Large Language Models with Semantic Data Augmentation
 
-Large language models (LLMs) are reported to be partial to certain cultures and thus suffer from culture difference. While cultural data are often expensive to collect,  existing efforts handles this challenge by prompt engineering or culture-specific pre-training. However, they might overlook the culture specificity and require extensive computing resources. In this paper, we propose CultureLLM, a cost-effective solution to fine-tune culture-aware LLMs. CultureLLM adopts World Value Survey as the seed data and then generates diverse and semantically equivalent training data using the proposed semantic data augmentation approach. Using only $50$ seed samples from WVS with augmented data, we fine-tuned culture-specific LLMs and one unified model (CultureLLM-One) for 9 cultures covering rich and low-resource languages. Extensive experiments on 59 culture-related datasets demonstrate that CultureLLM significantly outperforms various counterparts such as ChatGPT and Gemini Pro with comparable or even better performance than GPT-4. Our human study shows that the generated samples are diverse and semantically equivalent to the original samples, providing an effective solution for LLMs augmentation.
+## Introduction
 
-## Install
+![](fig-overview.jpg)
+
+Large language models (LLMs) are reported to be partial to certain cultures due to the dominance of training data from English corpora. Since multilingual cultural data are often expensive to collect, existing efforts handle this by prompt engineering or culture-specific pre-training. However, they might overlook the knowledge deficiency of low-resource cultures and require extensive computing resources. In this paper, we propose CultureLLM, a cost-effective solution to incorporate cultural differences into LLMs. CultureLLM adopts World Value Survey (WVS) as seed data and generates semantically equivalent training data via the proposed semantic data augmentation. Using only 50 seed samples from WVS with augmented data, we fine-tune culture-specific LLMs and a unified model (CultureLLM-One) for 9 cultures covering rich and low-resource languages. Extensive experiments in $60$ culture-related datasets demonstrate that \method significantly outperforms various counterparts such as GPT-3.5 (by 8.1%) and Gemini Pro (by 9.5%) with performance comparable to GPT-4 or even better. Our human study shows that the generated samples are semantically equivalent to the original samples, providing an effective solution for LLMs augmentation.
+
+## Table of Contents
+
+- [Requirements](#requirements)
+- [Usage](#usage)
+  - [1. Data Augmentation](#1-data-augmentation)
+  - [2. Dataset for Fine-tuning and Experiments](#2-dataset-for-fine-tuning-and-experients)
+  - [3. Fine-tuning your own CultureLLM](#3-fine-tuning-your-own-culturellm)
+    - [3.1. Fine-tune the same CultureLLMs as mentioned in paper](#31-fine-tune-the-same-culturellms-as-mentioned-in-paper)
+    - [3.2. Fine-tune other CultureLLMs](#32-fine-tune-other-culturellms)
+    - [3.3. Fine-tune CultureLLM-Llama-70b-chat](#32-fine-tune-culturellm-llama-70b-chat)
+  - [4. Experiments in our paper](#4-experiments-in-our-paper)
+
+## Requirements
 
 ```bash
 pip install jsonlines fire scikit-learn torch==2.0.0 transformers bitsandbytes accelerate
@@ -10,7 +26,9 @@ pip install openai
 pip instal nltk
 pip install -q -U google-generativeai
 ```
-## Data Augmentation
+## Usage
+
+### 1. Data Augmentation
 
 ```bash
 python main.py --n 5 --m 10
@@ -20,7 +38,7 @@ Parameter:
 - n: number of new generated semantic equvalient sentences perserved in the first step in our alogorithm for one seed sample
 - m: number of final generated samples perserved in our alogorithm for one seed sample
 
-## Dataset for Fine-tuning and Experiments
+### 2. Dataset for Fine-tuning and Experiments
 
 - /data contains all datasets for fine-tuning and experiments.
 - /data/WVQ.jsonl contains seed data from World Values Survey.
@@ -35,15 +53,15 @@ Besides, there are nine directories in /data, containing datasets both for fine-
 - "llama" represents fine-tuning data for Llama. 
 - "sentence_only" represents fine-tuning via 500 new generated samples by the first steps in our data augmentation approach.
 
-## Fine-tuning your own CultureLLM
+### 3. Fine-tuning your own CultureLLM
 
 data_process.py is to process data for fine-tuning. 
 
-### Fine-tune the same CultureLLMs as mentioned in paper
+#### 3.1. Fine-tune the same CultureLLMs as mentioned in paper
 
 You can first select the dataset for fine-tuning accrodding to above instructions. Then run finetune() function in data_process.py.
 
-### Fine-tune other CultureLLMs
+#### 3.2. Fine-tune other CultureLLMs
 
 - Step 1: download WVS file from https://www.worldvaluessurvey.org/WVSContents.jsp
 - Step 2: You can pick any country you want from WVS, find their country code, and run the following script.
@@ -54,13 +72,13 @@ python data_process.py --country "Targeted country" --country_code "Correspondin
 - (Optional) Step 4: Translate the data into other language. Run processLanguage() function.
 - Step 5: Fine-tuning.
 
-## Fine-tune CultureLLM-Llama-70b-chat
+#### 3.3. Fine-tune CultureLLM-Llama-70b-chat
 
 ```bash
 python llama_finetune.py --base_model "path_of_llama_70b" --new_model "path_of_new_model" --data_files "fine-tuning data path"
 ```
 
-## Experiments
+### 4. Experiments in our paper
 
 You can reproduce all experiments in our paper.
 - For all tasks except for CValues(Chinese Dataset)
