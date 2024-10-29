@@ -116,10 +116,19 @@ Parameter:
 ## Cite
 
 ```bash
-@article{li2024culturellm,
+@inproceedings{li2024culturellm,
   title={Culturellm: Incorporating cultural differences into large language models},
   author={Li, Cheng and Chen, Mengzhou and Wang, Jindong and Sitaram, Sunayana and Xie, Xing},
-  journal={arXiv preprint arXiv:2402.10946},
+  booktitle={Thirty-Eighth Annual Conference on Neural Information Processing Systems (NeurIPS)},
+  year={2024}
+}
+```
+
+```bash
+@inproceedings{li2024culturepark,
+  title={CulturePark: Boosting Cross-cultural Understanding in Large Language Models},
+  author={Li, Cheng and Teney, Damien and Yang, Linyi and Wen, Qingsong and Xie, Xing and Wang, Jindong},
+  booktitle={Thirty-Eighth Annual Conference on Neural Information Processing Systems (NeurIPS)},
   year={2024}
 }
 ```
