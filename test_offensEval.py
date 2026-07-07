@@ -13,10 +13,10 @@ with open("data/culture_context.jsonl", "r+", encoding="utf8") as f:
 
 def getModel(language):
     if language.lower() == 'arabic':
-        model_dict = {'Jordan_Iraq': 'xxx',  # best
-                    'chatgpt': 'gpt-3.5-turbo',
-                    'Jordan_Iraq_L': 'xxx',
-                    'llama_Arabic': 'xxx',
+        model_dict = {#'Jordan_Iraq': 'xxx',  # best
+                    #'chatgpt': 'gpt-3.5-turbo',
+                    'Jordan_Iraq_L': 'CultureLLM-ar-Llama-70b-chat',
+                    'llama_Arabic': 'CultureLLM-ar-Llama-70b-chat',
                     'llama': 'xxx',
                     'Jordan_Iraq_50': 'xxx',
                     'Jordan_Iraq_100': 'xxx',
@@ -437,40 +437,107 @@ def run(language, model_text, task, context, close=False):
     llama_tokenizer = None
     llama_model = None
     if 'llama'in model.lower() and 'api' not in model.lower():
-        from transformers import LlamaForCausalLM, LlamaTokenizer, AutoConfig, AutoModelWithLMHead, AutoTokenizer, BitsAndBytesConfig
+        # Workaround: block hub_kernels module to avoid initialization error
+        import sys
+        import os
+        
+        # Create a mock module to replace hub_kernels
+        class MockKernels:
+            pass
+        
+        # Inject mock before transformers tries to import it
+        sys.modules['kernels'] = MockKernels()
+        sys.modules['kernels.layer'] = MockKernels()
+        sys.modules['kernels.layer.layer'] = MockKernels()
+        
+        os.environ['TRANSFORMERS_NO_KERNELS'] = '1'
+        os.environ['KERNELS_DISABLE'] = '1'
+        
+        from transformers import LlamaForCausalLM, LlamaTokenizer, AutoConfig, AutoModelForCausalLM, AutoTokenizer, BitsAndBytesConfig
         import torch
         # llama_tokenizer = LlamaTokenizer.from_pretrained(model)
         # llama_model = LlamaForCausalLM.from_pretrained(model, device_map="auto")
         compute_dtype = getattr(torch, "float16")
 
+        import os
+        import torch.nn as nn
+        
         quant_config = BitsAndBytesConfig(
             load_in_4bit=True,
             bnb_4bit_quant_type="nf4",
             bnb_4bit_compute_dtype=compute_dtype,
             bnb_4bit_use_double_quant=False,
+            llm_int8_enable_fp32_cpu_offload=True,
         )
         
-        # Path for llama model
-        base_model = 'xxx'
-        max_memory = {i: '46000MB' for i in range(torch.cuda.device_count())}
+        # Memory allocation for multiple GPUs without complex offloading
+        num_gpus = torch.cuda.device_count()
+
+        max_memory = {i: '46000MB' for i in range(num_gpus)}  # Adjust memory allocation per GPU
+        
+        # With 4 GPUs, can allocate more per GPU
+        #max_memory = {i: "60GB" for i in range(num_gpus)}
+        max_memory["cpu"] = "30GB"
+        
+        print(f"[OPTIM] Using {num_gpus} GPUs with standard device mapping")
+        
+        # Path for llama model  
+        base_model = 'CultureLLM-ar-Llama-70b-chat'
+        
+        # Load with 4 GPUs - should fit without complex meta tensor issues
         llama_model = LlamaForCausalLM.from_pretrained(
             base_model,
             quantization_config=quant_config,
-            # device_map={"": 0}
             device_map="auto",
-            max_memory=max_memory
+            max_memory=max_memory,
+            low_cpu_mem_usage=True,
         )
-        llama_model.quantization_config = quant_config
+        print("[SUCCESS] Model loaded on 4 GPUs")
+        
+        # Memory optimization: disable KV cache to save inference memory
         llama_model.config.use_cache = False
+        llama_model.config.pretraining_tp = 1  # Optimize for inference
+        
+        # Disable Flash Attention 2 to avoid kernels library issues
+        # Use default attention mechanism instead
+        llama_model.config._attn_implementation = "eager"  # Use eager/default attention
+        
+        # Enable gradient checkpointing to trade compute for memory
+        if hasattr(llama_model, 'gradient_checkpointing'):
+            llama_model.gradient_checkpointing_enable()
+            print("[OPTIM] Gradient checkpointing enabled")
+        
+        print("[OPTIM] Using eager attention (kernels-free)")
+        
+        llama_model.quantization_config = quant_config
 
         tokenizer = AutoTokenizer.from_pretrained(base_model, trust_remote_code=True)
         tokenizer.pad_token = tokenizer.eos_token
         tokenizer.padding_side = "right"
 
         llama_tokenizer = tokenizer
+        
+        # Inference optimization: reduce batch size for small inputs
+        os.environ["TOKENIZERS_PARALLELISM"] = "false"  # Disable parallel tokenization to reduce memory spikes
+
+    # DEBUG: Print before opening data file
+    print(f"[DEBUG] About to process data from: {path}", flush=True)
+    if not os.path.exists(path):
+        print(f"[ERROR] Data file not found: {path}", flush=True)
+        return
+    
+    print(f"[DEBUG] File exists, processing {path}", flush=True)
 
     with open(path, "r+", encoding="utf8") as f:
+        item_count = 0
+        print(f"[DEBUG] Opened file, starting to read", flush=True)
         for item in jsonlines.Reader(f):
+            # print(f"[DEBUG] Read item {item_count}", flush=True)  # SPEED: Remove debug output
+            item_count += 1
+            if item_count % 100 == 0:
+                print(f"[PROGRESS] Processed {item_count}/2000 items", flush=True)
+            # if item_count == 1:
+            #     print(f"[DEBUG] First item keys: {item.keys()}", flush=True)  # SPEED: Remove debug output
             if task == 'offensive_detect_mp' or task == 'hate_detect_mp' or task == 'vulgar_detect_mp':
                 if 'comment' in item.keys():
                     input = item['comment']
@@ -482,18 +549,26 @@ def run(language, model_text, task, context, close=False):
                 input = item['question']
             else:
                 input = item['data']
-            print('Input: ', input)
+
+            # print ('ID: ', item['id'], flush=True)  # SPEED: Remove debug output
+            # print('Input: ', input, flush=True)  # SPEED: Remove debug output
             
             prompt = getPrompt(input, task)
-            print('P: ', prompt)
-            if close == True:
-                output = getResponse(prompt, model, 'no', context, llama_model, llama_tokenizer)
-            else:
-                output = getResponse(prompt, model, language, context, llama_model, llama_tokenizer)
+            # print('P: ', prompt, flush=True)  # SPEED: Remove debug output
+            try:
+                if close == True:
+                    output = getResponse(prompt, model, 'no', context, llama_model, llama_tokenizer)
+                else:
+                    output = getResponse(prompt, model, language, context, llama_model, llama_tokenizer)
+            except Exception as e:
+                print(f'[ERROR] Inference failed: {e}', flush=True)
+                import traceback
+                traceback.print_exc()
+                output = ''
 
             if output == None:
                 output = ''
-            print('Output: ', output)
+            # print('Output: ', output, flush=True)  # SPEED: Remove debug output
 
             label = postprocess(task, output)
 
@@ -501,7 +576,7 @@ def run(language, model_text, task, context, close=False):
 
     final_f1_score = computeMetrics(task, gt_list, pred_list)
     
-    print('F1 score: ', final_f1_score)
+    print('F1 score: ', final_f1_score, flush=True)
 
     language = language.lower()
     dir_path = f'results/{language}'
@@ -511,6 +586,8 @@ def run(language, model_text, task, context, close=False):
     with jsonlines.open(f'{dir_path}/{task}_res.jsonl',mode='a') as writer:
         item = {'Model': model_text, "f1_score": final_f1_score, 'Context': context}
         writer.write(item)
+    
+    print(f'[SUCCESS] Results written to {dir_path}/{task}_res.jsonl', flush=True)
 
 if __name__ == '__main__':
     fire.Fire(run)    

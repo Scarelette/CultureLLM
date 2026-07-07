@@ -1,4 +1,5 @@
 import os, fire
+import inspect
 import torch
 from datasets import load_dataset
 from transformers import (
@@ -16,10 +17,23 @@ from peft import LoraConfig
 from trl import SFTTrainer
 from accelerate import init_empty_weights,infer_auto_device_map,load_checkpoint_in_model,dispatch_model
 
+
+## added code - Daniel Benjamin
+# importing os module for environment variables
+import os
+# importing necessary functions from dotenv library
+from dotenv import load_dotenv, dotenv_values 
+# loading variables from .env file
+load_dotenv() 
+
+# accessing and printing value
+print(os.getenv("HF_TOKEN"))
+
+
 # Model from Hugging Face hub or Model path
 base_model = ''
 
-def run(base_model, new_model, data_files):
+def run(base_model, new_model, data_files, resume_from_checkpoint=None):
 
     dataset = load_dataset('json', data_files=data_files, split='train')
 
@@ -54,8 +68,13 @@ def run(base_model, new_model, data_files):
         bias="none",
         task_type="CAUSAL_LM",
     )
+    output_dir = os.path.abspath(
+        os.path.expanduser(os.getenv("FINETUNE_OUTPUT_DIR", "./results-finetune"))
+    )
+    os.makedirs(output_dir, exist_ok=True)
+
     training_params = TrainingArguments(
-        output_dir="/data/results-finetune",
+        output_dir=output_dir,
         num_train_epochs=6,
         per_device_train_batch_size=4,
         gradient_accumulation_steps=1,
@@ -69,25 +88,35 @@ def run(base_model, new_model, data_files):
         max_grad_norm=0.3,
         max_steps=-1,
         warmup_ratio=0.03,
-        group_by_length=True,
+        #group_by_length=True,
+        train_sampling_strategy="group_by_length",
         lr_scheduler_type="constant",
         report_to="tensorboard"
     )
 
-    trainer = SFTTrainer(
-        model=model,
-        train_dataset=dataset,
-        peft_config=peft_params,
-        dataset_text_field="text",
-        max_seq_length=None,
-        tokenizer=tokenizer,
-        args=training_params,
-        packing=False,
-    )
-    trainer.train()
+    trainer_kwargs = {
+        "model": model,
+        "train_dataset": dataset,
+        "peft_config": peft_params,
+        #"dataset_text_field": "text",
+        #"max_seq_length": None,
+        "args": training_params,
+    }
+
+    # Pass only the kwargs accepted by the installed TRL version.
+    sft_init_params = inspect.signature(SFTTrainer.__init__).parameters
+    if "packing" in sft_init_params:
+        trainer_kwargs["packing"] = False
+    if "processing_class" in sft_init_params:
+        trainer_kwargs["processing_class"] = tokenizer
+    elif "tokenizer" in sft_init_params:
+        trainer_kwargs["tokenizer"] = tokenizer
+
+    trainer = SFTTrainer(**trainer_kwargs)
+    trainer.train(resume_from_checkpoint=resume_from_checkpoint)
 
     trainer.model.save_pretrained(new_model)
-    trainer.tokenizer.save_pretrained(new_model)
+    tokenizer.save_pretrained(new_model)
 
 def eval():
     prompt = "Who is Leonardo Da Vinci?"
